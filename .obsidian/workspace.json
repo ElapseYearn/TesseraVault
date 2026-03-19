@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "b058c152e1ca793f",
+        "id": "b501495e1e96a50c",
         "type": "tabs",
         "children": [
           {
-            "id": "2bb35fbc313c43e9",
+            "id": "7210abdaceeb458a",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -178,7 +178,23 @@
   },
   "active": "972d00454c11107f",
   "lastOpenFiles": [
-    "TesseraScript/Base",
-    "TesseraScript"
+    "TesseraScript/components/heatmap/style.css",
+    "TesseraScript/components/heatmap/README.md",
+    "TesseraScript/components/heatmap/index.js",
+    "TesseraScript/components/heatmap/demo.md",
+    "TesseraScript/components/heatmap/config.json",
+    "TesseraScript/components/card/README.md",
+    "TesseraScript/components/card/demo.md",
+    "TesseraScript/components/card/config.json",
+    "TesseraScript/components/card/style.css",
+    "TesseraScript/components/card/index.js",
+    "TesseraScript/views/heatmap-card/后续内容暂时忽略",
+    "TesseraScript/views/heatmap-card",
+    "TesseraScript/components/heatmap/view.js",
+    "TesseraScript/components/heatmap",
+    "TesseraScript/views/heatmap/demo.md",
+    "TesseraScript/views/heatmap/README.md",
+    "README.md",
+    "new.md"
   ]
 }
