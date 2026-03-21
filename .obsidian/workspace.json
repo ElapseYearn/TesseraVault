@@ -179,6 +179,9 @@
   },
   "active": "7210abdaceeb458a",
   "lastOpenFiles": [
+    "TesseraScript/core/README.md",
+    "TesseraScript/opencode.json",
+    "LICENSE",
     "Drawing 2026-03-21 16.18.20.excalidraw.md",
     "TesseraScript/components/heatmap/style.css",
     "TesseraScript/components/heatmap/README.md",
@@ -192,8 +195,6 @@
     "TesseraScript/components/card/index.js",
     "TesseraScript/views/heatmap-card/后续内容暂时忽略",
     "TesseraScript/views/heatmap-card",
-    "TesseraScript/components/heatmap/view.js",
-    "TesseraScript/components/heatmap",
     "TesseraScript/views/heatmap/demo.md",
     "TesseraScript/views/heatmap/README.md",
     "README.md",
