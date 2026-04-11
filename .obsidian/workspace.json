@@ -11,10 +11,14 @@
             "id": "d0e489cf374535af",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "TesseraScript/components/card/demo.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "demo"
             }
           }
         ]
@@ -178,17 +182,21 @@
   },
   "active": "d0e489cf374535af",
   "lastOpenFiles": [
-    "TesseraScript/components/card/demo.md",
-    "config原理与功能详解.md",
     "TesseraScript/components/card/README.md",
+    "TesseraScript/components/card/demo.md",
+    "TesseraScript/dependency-loader.js",
+    "TesseraScript/tessera.bootstrap.js",
+    "opencode.json",
+    "card-设计规范检查报告.md",
+    "TesseraScript 使用示例.md",
+    "README.md",
+    "config原理与功能详解.md",
     "TesseraScript/components/heatmap-v2/demo.md",
     "主页2.md",
     "TesseraScript/components/heatmap/demo.md",
     "主页（26.04.11） 1.md",
     "主页（Original）.md",
     "temp.md",
-    "README.md",
-    "TesseraScript 使用示例.md",
     "TesseraScript/core/README.md",
     "TesseraScript/markdown.md",
     "每日任务/Daily/26Q1/26.03 下/26.03.30.md",
@@ -202,17 +210,12 @@
     "每日任务/Daily/26Q1/26.03 下/26.03.23.md",
     "每日任务/Daily/26Q1/26.03 下/26.03.22.md",
     "每日任务/Daily/26Q1/26.03 下/26.03.21.md",
-    "每日任务/Daily/26Q1/26.03 下/26.03.20.md",
-    "每日任务/Daily/26Q1/26.03 下/26.03.19.md",
     "每日任务/Daily/26Q2/26.04上",
     "每日任务/Daily/26Q1/26.03 下",
     "每日任务/Daily/26Q1/26.03 上",
     "每日任务/Daily/26Q1/26.02 上",
     "每日任务/Daily/26Q1/26.01 下",
     "每日任务/Daily/25Q4/25.12 下",
-    "每日任务/Daily/25Q4/25.12 上",
-    "每日任务/Daily/26Q1/26.01 上",
-    "每日任务/Daily/25Q4/25.11 下",
-    "每日任务/Daily/25Q4/25.11 上"
+    "每日任务/Daily/25Q4/25.12 上"
   ]
 }
