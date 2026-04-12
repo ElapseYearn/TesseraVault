@@ -44,7 +44,8 @@
 
 /* ─── Hover：左侧内阴影变 accent 色 ───────────────────────── */
 .ts-card:hover {
-  box-shadow: inset var(--ts-hover-accent-width, 3px) 0 0 var(--ts-accent, var(--interactive-accent));
+  box-shadow: inset var(--ts-hover-accent-width, 3px) 0 0
+    var(--ts-card-hover-accent, var(--ts-accent, var(--interactive-accent)));
 }
 
 /* ─── 变体：无边框 ────────────────────────────────────────── */

@@ -15,6 +15,7 @@ Tessera.define("components/card", function (require, module, exports) {
     emptyText: "No content",
     flags: {
       showHeader: true,
+      headerSep: true,
       showTitle: true,
       showMeta: true,
       showValue: true,
@@ -31,6 +32,7 @@ Tessera.define("components/card", function (require, module, exports) {
         "linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(245, 248, 252, 0.9))",
       border: "rgba(120, 140, 160, 0.18)",
       shadow: "0 12px 28px rgba(15, 23, 42, 0.08)",
+      hoverAccent: "var(--interactive-accent)",
       value: "var(--text-accent, var(--text-normal))",
     },
   };
@@ -132,12 +134,16 @@ Tessera.define("components/card", function (require, module, exports) {
         "--ts-card-background": colors.background,
         "--ts-card-border": colors.border,
         "--ts-card-shadow": colors.shadow,
+        "--ts-card-hover-accent": colors.hoverAccent,
         "--ts-card-value-color": colors.value,
       },
       children: [
         flags.showHeader !== false && headerChildren.length
           ? dom.createElement("header", {
-              className: "ts-card__header",
+              className: [
+                "ts-card__header",
+                flags.headerSep !== false && "ts-card__header--sep",
+              ],
               children: headerChildren,
             })
           : null,

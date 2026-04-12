@@ -1,41 +1,21 @@
-下面是一个**适配“现代版 card 逻辑”**的 `demo.md`。
+# Card Demo
 
-核心改动：
+`components/card` 现在是一个返回 DOM 节点的轻量卡片组件，适合在 DataviewJS、普通脚本渲染区、仪表盘模块里直接拼装使用。
 
-- 不再使用：
-  ```js
-  myCard.body.setText(...)
-  myCard.appendTo(...)
-  card.row(...)
-  ```
-- 改成：
-  ```js
-  const el = card({ ... });
-  dv.container.appendChild(el);
-  ```
-- 正文内容通过：
-  ```js
-  value
-  content
-  children
-  ```
-  传入。
-- 样式覆盖通过新版的：
-  ```js
-  layout
-  colors
-  flags
-  className
-  ```
-  来演示。
-- 因为现代版 `card` 没有 `card.row`，所以横排布局 demo 改成用 `dom.createElement("div", { ... })` 自己创建布局容器。
+## 推荐加载方式
 
----
+```dataviewjs
+await dv.view("TesseraScript/tessera.bootstrap");
+await dv.view("TesseraScript/core/dom");
+await dv.view("TesseraScript/core/file");
+await dv.view("TesseraScript/core/css");
+await dv.view("TesseraScript/core/config");
+await dv.view("TesseraScript/components/card/index");
 
-```md
-# Card - Demo
+const card = Tessera.use("card");
+```
 
-## 基础用法
+## 1. 最小示例
 
 ```dataviewjs
 await dv.view("TesseraScript/tessera.bootstrap");
@@ -47,17 +27,17 @@ await dv.view("TesseraScript/components/card/index");
 
 const card = Tessera.use("card");
 
-const myCard = card({
+dv.container.appendChild(
+  card({
     title: "今日任务",
-    content: "这里是卡片内容。",
-});
-
-dv.container.appendChild(myCard);
+    content: "这里放最基础的卡片内容。",
+  })
+);
 ```
 
----
+## 2. 信息卡片
 
-## 带副标题
+适合展示说明、摘要、状态文字。
 
 ```dataviewjs
 await dv.view("TesseraScript/tessera.bootstrap");
@@ -69,18 +49,18 @@ await dv.view("TesseraScript/components/card/index");
 
 const card = Tessera.use("card");
 
-const myCard = card({
+dv.container.appendChild(
+  card({
     title: "学习记录",
-    meta: "Study Logs",
-    content: "语法学习：100条",
-});
-
-dv.container.appendChild(myCard);
+    meta: "STUDY",
+    content: "今天完成了 3 个章节复习，并整理了错题。",
+  })
+);
 ```
 
----
+## 3. 数值卡片
 
-## 数值卡片
+适合 KPI、统计概览、计数信息。
 
 ```dataviewjs
 await dv.view("TesseraScript/tessera.bootstrap");
@@ -92,19 +72,19 @@ await dv.view("TesseraScript/components/card/index");
 
 const card = Tessera.use("card");
 
-const statCard = card({
-    title: "快速统计",
+dv.container.appendChild(
+  card({
+    title: "完成数",
     meta: "TODAY",
-    value: "7",
-    content: "今日完成：7 项",
-});
-
-dv.container.appendChild(statCard);
+    value: 7,
+    content: "较昨天多 2 项。",
+  })
+);
 ```
 
----
+## 4. 关闭 Header 分割线
 
-## 隐藏 Header
+使用 `flags.headerSep` 控制 header 底部分割线。
 
 ```dataviewjs
 await dv.view("TesseraScript/tessera.bootstrap");
@@ -116,23 +96,21 @@ await dv.view("TesseraScript/components/card/index");
 
 const card = Tessera.use("card");
 
-const noHeaderCard = card({
-    title: "备忘",
-    content: "记得喝水。",
+dv.container.appendChild(
+  card({
+    title: "无分割线 Header",
+    meta: "PLAIN",
+    content: "适合内容较短、视觉更轻的卡片。",
     flags: {
-        showHeader: false,
-        showTitle: true,
-        showMeta: true,
-        showValue: true,
+      headerSep: false,
     },
-});
-
-dv.container.appendChild(noHeaderCard);
+  })
+);
 ```
 
----
+## 5. 自定义 Hover 强调色
 
-## 只显示标题，不显示副标题
+使用 `colors.hoverAccent` 控制 hover 时左侧高亮色。
 
 ```dataviewjs
 await dv.view("TesseraScript/tessera.bootstrap");
@@ -144,121 +122,89 @@ await dv.view("TesseraScript/components/card/index");
 
 const card = Tessera.use("card");
 
-const titleOnlyCard = card({
-    title: "静态信息",
-    meta: "META WILL BE HIDDEN",
-    content: "这张卡片隐藏了 meta 信息。",
-    flags: {
-        showHeader: true,
-        showTitle: true,
-        showMeta: false,
-        showValue: true,
-    },
-});
-
-dv.container.appendChild(titleOnlyCard);
-```
-
----
-
-## 空内容状态
-
-```dataviewjs
-await dv.view("TesseraScript/tessera.bootstrap");
-await dv.view("TesseraScript/core/dom");
-await dv.view("TesseraScript/core/file");
-await dv.view("TesseraScript/core/css");
-await dv.view("TesseraScript/core/config");
-await dv.view("TesseraScript/components/card/index");
-
-const card = Tessera.use("card");
-
-const emptyCard = card({
-    title: "空卡片",
-    meta: "EMPTY",
-    emptyText: "暂无内容",
-});
-
-dv.container.appendChild(emptyCard);
-```
-
----
-
-## 局部覆盖布局和颜色
-
-```dataviewjs
-await dv.view("TesseraScript/tessera.bootstrap");
-await dv.view("TesseraScript/core/dom");
-await dv.view("TesseraScript/core/file");
-await dv.view("TesseraScript/core/css");
-await dv.view("TesseraScript/core/config");
-await dv.view("TesseraScript/components/card/index");
-
-const card = Tessera.use("card");
-
-const customCard = card({
-    title: "自定义外观",
-    meta: "CUSTOM",
+dv.container.appendChild(
+  card({
+    title: "自定义 Hover",
+    meta: "GREEN",
     value: "42",
-    content: "这张卡片使用了独立的圆角、内边距、背景和阴影。",
+    content: "将默认紫色 hover 改成绿色。",
+    colors: {
+      hoverAccent: "#22c55e",
+    },
+  })
+);
+```
+
+## 6. 自定义外观
+
+适合局部做仪表盘强调卡、封面卡、专题卡。
+
+```dataviewjs
+await dv.view("TesseraScript/tessera.bootstrap");
+await dv.view("TesseraScript/core/dom");
+await dv.view("TesseraScript/core/file");
+await dv.view("TesseraScript/core/css");
+await dv.view("TesseraScript/core/config");
+await dv.view("TesseraScript/components/card/index");
+
+const card = Tessera.use("card");
+
+dv.container.appendChild(
+  card({
+    title: "本周聚焦",
+    meta: "FOCUS",
+    value: "84%",
+    content: "这一张覆盖了背景、边框、数值色和 hover 强调色。",
     layout: {
-        maxWidth: "100%",
-        padding: "20px",
-        radius: "8px",
-        gap: "16px",
-        bodyGap: "12px",
+      padding: "20px",
+      radius: "12px",
     },
     colors: {
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        border: "rgba(255, 255, 255, 0.35)",
-        shadow: "0 16px 36px rgba(76, 81, 191, 0.28)",
-        value: "#ffffff",
+      background: "linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(36, 99, 235, 0.88))",
+      border: "rgba(255, 255, 255, 0.18)",
+      value: "#ffffff",
+      hoverAccent: "#f59e0b",
     },
-});
-
-dv.container.appendChild(customCard);
-```
-
----
-## 多卡片横排布局 - 等分三列
-
-```dataviewjs
-await dv.view("TesseraScript/tessera.bootstrap");
-await dv.view("TesseraScript/core/file");
-await dv.view("TesseraScript/core/css");
-await dv.view("TesseraScript/components/card/index");
-
-const card = Tessera.use("card");
-
-const items = [
-    { title: "笔记数", meta: "NOTES", value: "128" },
-    { title: "完成任务", meta: "DONE", value: "34" },
-    { title: "连续天数", meta: "STREAK", value: "12" },
-];
-
-const cards = items.map((item) =>
-    card({
-        title: item.title,
-        meta: item.meta,
-        value: item.value,
-    })
+  })
 );
-
-const rowEl = document.createElement("div");
-rowEl.style.display = "grid";
-rowEl.style.gridTemplateColumns = "repeat(3, minmax(0, 1fr))";
-rowEl.style.gap = "16px";
-rowEl.style.alignItems = "stretch";
-
-for (const el of cards) {
-    rowEl.appendChild(el);
-}
-
-dv.container.appendChild(rowEl);
 ```
 
----
-## 多卡片横排布局 - 左宽右窄，2:1 比例
+## 7. 放入自定义节点
+
+`children` 适合塞入列表、按钮区、Dataview 查询结果等复杂节点。
+
+```dataviewjs
+await dv.view("TesseraScript/tessera.bootstrap");
+await dv.view("TesseraScript/core/dom");
+await dv.view("TesseraScript/core/file");
+await dv.view("TesseraScript/core/css");
+await dv.view("TesseraScript/core/config");
+await dv.view("TesseraScript/components/card/index");
+
+const card = Tessera.use("card");
+
+const list = document.createElement("ul");
+list.style.margin = "0";
+list.style.paddingLeft = "18px";
+
+["整理项目", "复盘训练", "更新周报"].forEach((text) => {
+  const li = document.createElement("li");
+  li.textContent = text;
+  list.appendChild(li);
+});
+
+dv.container.appendChild(
+  card({
+    title: "待办清单",
+    meta: "LIST",
+    children: list,
+  })
+);
+```
+
+## 8. 多卡片并排
+
+组件本身只负责单张卡片。多列布局建议交给外层容器处理。
 
 ```dataviewjs
 await dv.view("TesseraScript/tessera.bootstrap");
@@ -268,163 +214,25 @@ await dv.view("TesseraScript/components/card/index");
 
 const card = Tessera.use("card");
 
-const main = card({
-    title: "主要内容",
-    meta: "MAIN",
-    content: "这张卡片占 2/3 宽度。",
+const grid = document.createElement("div");
+grid.style.display = "grid";
+grid.style.gridTemplateColumns = "repeat(3, minmax(0, 1fr))";
+grid.style.gap = "16px";
+
+[
+  { title: "笔记数", meta: "NOTES", value: 128 },
+  { title: "任务数", meta: "DONE", value: 34 },
+  { title: "连续天数", meta: "STREAK", value: 12 },
+].forEach((item) => {
+  grid.appendChild(card(item));
 });
 
-const side = card({
-    title: "侧边信息",
-    meta: "SIDE",
-    content: "这张卡片占 1/3 宽度。",
-});
-
-const rowEl = document.createElement("div");
-rowEl.style.display = "grid";
-rowEl.style.gridTemplateColumns = "2fr 1fr";
-rowEl.style.gap = "16px";
-rowEl.style.alignItems = "stretch";
-
-rowEl.appendChild(main);
-rowEl.appendChild(side);
-
-dv.container.appendChild(rowEl);
+dv.container.appendChild(grid);
 ```
 
----
+## 9. 配置文件加载
 
-## 多卡片横排布局 - 左 2 卡片右 1 卡片
-
-```dataviewjs
-await dv.view("TesseraScript/tessera.bootstrap");
-await dv.view("TesseraScript/core/file");
-await dv.view("TesseraScript/core/css");
-await dv.view("TesseraScript/components/card/index");
-
-const card = Tessera.use("card");
-
-const topLeft = card({
-    title: "左上",
-    meta: "TOP LEFT",
-    content: "左侧第一张卡片。",
-});
-
-const bottomLeft = card({
-    title: "左下",
-    meta: "BOTTOM LEFT",
-    content: "左侧第二张卡片。",
-});
-
-const right = card({
-    title: "右侧",
-    meta: "RIGHT",
-    content: "这张卡片撑满左侧两张的总高度。",
-});
-
-const leftColumn = document.createElement("div");
-leftColumn.style.display = "grid";
-leftColumn.style.gridTemplateRows = "1fr 1fr";
-leftColumn.style.gap = "16px";
-leftColumn.appendChild(topLeft);
-leftColumn.appendChild(bottomLeft);
-
-const rowEl = document.createElement("div");
-rowEl.style.display = "grid";
-rowEl.style.gridTemplateColumns = "1fr 1fr";
-rowEl.style.gap = "16px";
-rowEl.style.alignItems = "stretch";
-rowEl.appendChild(leftColumn);
-rowEl.appendChild(right);
-
-dv.container.appendChild(rowEl);
-```
-
----
-## 多卡片横排布局 - 自定义列比例
-
-```dataviewjs
-await dv.view("TesseraScript/tessera.bootstrap");
-await dv.view("TesseraScript/core/file");
-await dv.view("TesseraScript/core/css");
-await dv.view("TesseraScript/components/card/index");
-
-const card = Tessera.use("card");
-
-const a = card({
-    title: "A",
-    meta: "3fr",
-    content: "最宽",
-});
-
-const b = card({
-    title: "B",
-    meta: "2fr",
-    content: "中等",
-});
-
-const c = card({
-    title: "C",
-    meta: "1fr",
-    content: "最窄",
-});
-
-const rowEl = document.createElement("div");
-rowEl.style.display = "grid";
-rowEl.style.gridTemplateColumns = "3fr 2fr 1fr";
-rowEl.style.gap = "16px";
-rowEl.style.alignItems = "stretch";
-
-rowEl.appendChild(a);
-rowEl.appendChild(b);
-rowEl.appendChild(c);
-
-dv.container.appendChild(rowEl);
-```
-
----
-## 向卡片中追加 Dataview 查询结果
-
-```dataviewjs
-await dv.view("TesseraScript/tessera.bootstrap");
-await dv.view("TesseraScript/core/file");
-await dv.view("TesseraScript/core/css");
-await dv.view("TesseraScript/components/card/index");
-
-const card = Tessera.use("card");
-
-const pages = dv.pages().sort((p) => p.file.mtime, "desc").limit(5);
-
-const listEl = document.createElement("ul");
-listEl.style.listStyle = "none";
-listEl.style.padding = "0";
-listEl.style.margin = "0";
-
-for (const page of pages) {
-    const li = document.createElement("li");
-    li.style.padding = "4px 0";
-    li.style.borderBottom = "1px solid var(--ts-card-border)";
-
-    const link = document.createElement("a");
-    link.textContent = page.file.name;
-    link.href = page.file.path;
-
-    li.appendChild(link);
-    listEl.appendChild(li);
-}
-
-const recentCard = card({
-    title: "最近笔记",
-    meta: "RECENT",
-    children: listEl,
-});
-
-dv.container.appendChild(recentCard);
-```
-
----
-
-## 加载配置
+如果你希望多个页面共用默认风格，可以先加载 `config.json`。
 
 ```dataviewjs
 await dv.view("TesseraScript/tessera.bootstrap");
@@ -438,63 +246,20 @@ const card = Tessera.use("card");
 
 await card.loadConfig();
 
-const myCard = card({
+dv.container.appendChild(
+  card({
     title: "配置加载示例",
     meta: "CONFIG",
-    content: "这个示例会先尝试加载 components/card/config.json，然后再创建卡片。",
-});
-
-dv.container.appendChild(myCard);
+    content: "会优先使用 components/card/config.json 里的默认配置。",
+  })
+);
 ```
 
----
+## 使用建议
 
-## 功能总结
-
-### 属性
-
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `title` | string | `""` | 卡片标题 |
-| `meta` | string | `""` | 副标题/元信息 |
-| `value` | any | `null` | 主数值显示 |
-| `content` | string / Node / Node[] | `undefined` | 正文内容 |
-| `children` | Node / Node[] | `undefined` | 自定义子节点内容 |
-| `emptyText` | string | `"No content"` | 无内容时显示的文本 |
-| `className` | string / string[] | `undefined` | 追加到 `.ts-card` 的类名 |
-| `flags.showHeader` | boolean | `true` | 是否显示 header |
-| `flags.showTitle` | boolean | `true` | 是否显示标题 |
-| `flags.showMeta` | boolean | `true` | 是否显示 meta |
-| `flags.showValue` | boolean | `true` | 是否显示 value |
-| `layout.maxWidth` | string | `"100%"` | 卡片最大宽度 |
-| `layout.padding` | string | `"16px"` | 卡片内边距 |
-| `layout.radius` | string | `"16px"` | 卡片圆角 |
-| `layout.gap` | string | `"14px"` | 卡片内部间距 |
-| `layout.bodyGap` | string | `"12px"` | body 内部间距 |
-| `colors.background` | string | - | 卡片背景 |
-| `colors.border` | string | - | 边框颜色 |
-| `colors.shadow` | string | - | 阴影 |
-| `colors.value` | string | - | value 颜色 |
-
-### 与旧 API 的区别
-
-现代版 `card()` 直接返回 DOM 元素，因此：
-
-```js
-const el = card({
-    title: "标题",
-    content: "内容",
-});
-
-dv.container.appendChild(el);
-```
-
-不再使用：
-
-```js
-myCard.body.setText("内容");
-myCard.appendTo(dv.container);
-```
-
-现代版也没有内置 `card.row()`，横排布局可以用 `dom.createElement("div", { style, children })` 自行创建。
-```
+1. 卡片内部信息层级尽量保持 2 到 3 层：`title`、`meta`、`value/content` 即可。
+2. 统计数字优先放在 `value`，说明文字放在 `content`，不要把长文本塞进 `meta`。
+3. `headerSep: false` 适合极简卡片、封面卡、短摘要卡。
+4. `hoverAccent` 建议只做少量主题强调，避免同一页面出现太多冲突颜色。
+5. 多卡片排版时，让外层容器负责 `grid` 或 `flex`，不要把布局逻辑塞进卡片本身。
+6. 大范围统一风格优先写进 `config.json`，单张特殊卡片再局部覆盖。
