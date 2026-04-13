@@ -78,11 +78,17 @@ dv.container.appendChild(
 
 | 字段 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `colors.background` | `string` | 见默认配置 | 卡片背景 |
-| `colors.border` | `string` | 见默认配置 | 边框颜色 |
-| `colors.shadow` | `string` | 见默认配置 | 阴影变量入口 |
-| `colors.hoverAccent` | `string` | `var(--interactive-accent)` | hover 时左侧强调色 |
-| `colors.value` | `string` | `var(--text-accent, var(--text-normal))` | 数值颜色 |
+| `colors.background` | `string` | 见默认配置 | 共享颜色覆盖，会同时作用于日间和夜间 |
+| `colors.border` | `string` | 见默认配置 | 共享边框颜色覆盖 |
+| `colors.shadow` | `string` | 见默认配置 | 共享阴影变量入口 |
+| `colors.hoverAccent` | `string` | `var(--interactive-accent)` | 共享 hover 强调色 |
+| `colors.value` | `string` | `var(--text-accent, var(--text-normal))` | 共享数值颜色 |
+| `colors.light` | `object` | 见默认配置 | 日间主题颜色 |
+| `colors.dark` | `object` | 见默认配置 | 夜间主题颜色 |
+
+`colors.light` 和 `colors.dark` 内部都支持 `background`、`border`、`shadow`、`hoverAccent`、`value`。组件会根据 `body.theme-light` / `body.theme-dark` 自动切换。
+
+如果只配置了一套主题颜色，另一套会继续回退到组件内置默认值；如果继续使用旧的扁平 `colors.background` 这类写法，则会同时覆盖两套主题，方便单卡独立计算颜色。
 
 ### `styles`
 
@@ -166,10 +172,18 @@ card({
   value: "42",
   content: "这一张不会影响同页其它卡片。",
   colors: {
-    background: "rgba(248, 250, 252, 0.98)",
-    border: "rgba(148, 163, 184, 0.18)",
-    hoverAccent: "rgba(59, 130, 246, 0.45)",
-    value: "#0f172a",
+    light: {
+      background: "rgba(248, 250, 252, 0.98)",
+      border: "rgba(148, 163, 184, 0.18)",
+      hoverAccent: "rgba(59, 130, 246, 0.45)",
+      value: "#0f172a",
+    },
+    dark: {
+      background: "rgba(15, 23, 42, 0.78)",
+      border: "rgba(96, 165, 250, 0.2)",
+      hoverAccent: "rgba(96, 165, 250, 0.5)",
+      value: "#dbeafe",
+    },
   },
   styles: {
     title: {

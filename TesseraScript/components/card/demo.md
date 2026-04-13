@@ -110,7 +110,7 @@ dv.container.appendChild(
 
 ## 5. 自定义 Hover 强调色
 
-使用 `colors.hoverAccent` 控制 hover 时左侧高亮色。
+使用 `colors.light.hoverAccent` / `colors.dark.hoverAccent` 控制 hover 时左侧高亮色。
 
 ```dataviewjs
 await dv.view("TesseraScript/tessera.bootstrap");
@@ -129,7 +129,12 @@ dv.container.appendChild(
     value: "42",
     content: "将默认紫色 hover 改成绿色。",
     colors: {
-      hoverAccent: "#22c55e",
+      light: {
+        hoverAccent: "rgba(34, 197, 94, 0.55)",
+      },
+      dark: {
+        hoverAccent: "rgba(74, 222, 128, 0.65)",
+      },
     },
   })
 );
@@ -160,10 +165,18 @@ dv.container.appendChild(
       radius: "12px",
     },
     colors: {
-      background: "rgba(239, 246, 255, 0.96)",
-      border: "rgba(96, 165, 250, 0.18)",
-      value: "#1d4ed8",
-      hoverAccent: "rgba(96, 165, 250, 0.55)",
+      light: {
+        background: "rgba(239, 246, 255, 0.96)",
+        border: "rgba(96, 165, 250, 0.18)",
+        value: "#1d4ed8",
+        hoverAccent: "rgba(96, 165, 250, 0.55)",
+      },
+      dark: {
+        background: "rgba(15, 23, 42, 0.78)",
+        border: "rgba(96, 165, 250, 0.24)",
+        value: "#bfdbfe",
+        hoverAccent: "rgba(96, 165, 250, 0.65)",
+      },
     },
   })
 );
@@ -195,19 +208,28 @@ wrap.appendChild(
     value: "42",
     content: "这一张有独立背景、独立标题色、独立数值大小。",
     colors: {
-      background: "rgba(248, 250, 252, 0.98)",
-      border: "rgba(148, 163, 184, 0.18)",
-      hoverAccent: "rgba(59, 130, 246, 0.45)",
-      value: "#0f172a",
-      shadow: "0 12px 30px rgba(15, 23, 42, 0.24)",
+      light: {
+        background: "rgba(248, 250, 252, 0.98)",
+        border: "rgba(148, 163, 184, 0.18)",
+        hoverAccent: "rgba(59, 130, 246, 0.45)",
+        value: "#0f172a",
+        shadow: "0 12px 30px rgba(15, 23, 42, 0.12)",
+      },
+      dark: {
+        background: "rgba(15, 23, 42, 0.82)",
+        border: "rgba(96, 165, 250, 0.22)",
+        hoverAccent: "rgba(96, 165, 250, 0.55)",
+        value: "#e0f2fe",
+        shadow: "0 16px 36px rgba(2, 6, 23, 0.34)",
+      },
     },
     styles: {
       title: {
-        color: "#0f172a",
+        color: "var(--text-normal)",
         fontSize: "18px",
       },
       meta: {
-        color: "#64748b",
+        color: "var(--text-muted)",
       },
       value: {
         fontSize: "40px",
@@ -225,6 +247,16 @@ wrap.appendChild(
     title: "浅色卡片",
     meta: "LIGHT",
     content: "这一张保持完全不同的圆角、边框和 header 样式。",
+    colors: {
+      light: {
+        background: "#fffbeb",
+        border: "rgba(251, 191, 36, 0.45)",
+      },
+      dark: {
+        background: "rgba(69, 26, 3, 0.72)",
+        border: "rgba(251, 191, 36, 0.35)",
+      },
+    },
     flags: {
       headerSep: false,
     },
@@ -232,16 +264,15 @@ wrap.appendChild(
       card: {
         border: "1px dashed rgba(251, 191, 36, 0.8)",
         borderRadius: "24px",
-        background: "#fffbeb",
       },
       header: {
         marginBottom: "4px",
       },
       title: {
-        color: "#92400e",
+        color: "var(--text-normal)",
       },
       body: {
-        color: "#78350f",
+        color: "var(--text-normal)",
       },
     },
   })

@@ -8,6 +8,31 @@ Tessera.define("components/card", function (require, module, exports) {
 
   let stylePromise = null;
 
+  const themeColorKeys = [
+    "background",
+    "border",
+    "shadow",
+    "hoverAccent",
+    "value",
+  ];
+
+  const defaultCardColors = {
+    light: {
+      background: "rgba(245, 248, 252, 0.9)",
+      border: "rgba(120, 140, 160, 0.18)",
+      shadow: "0 12px 28px rgba(15, 23, 42, 0.08)",
+      hoverAccent: "var(--interactive-accent)",
+      value: "var(--text-accent, var(--text-normal))",
+    },
+    dark: {
+      background: "rgba(30, 41, 59, 0.72)",
+      border: "rgba(148, 163, 184, 0.18)",
+      shadow: "0 16px 36px rgba(2, 6, 23, 0.28)",
+      hoverAccent: "var(--interactive-accent)",
+      value: "var(--text-accent, var(--text-normal))",
+    },
+  };
+
   const defaultCardConfig = {
     title: "",
     meta: "",
@@ -27,13 +52,7 @@ Tessera.define("components/card", function (require, module, exports) {
       gap: "14px",
       bodyGap: "12px",
     },
-    colors: {
-      background: "rgba(245, 248, 252, 0.9)",
-      border: "rgba(120, 140, 160, 0.18)",
-      shadow: "0 12px 28px rgba(15, 23, 42, 0.08)",
-      hoverAccent: "var(--interactive-accent)",
-      value: "var(--text-accent, var(--text-normal))",
-    },
+    colors: defaultCardColors,
     styles: {
       card: null,
       header: null,
@@ -91,6 +110,25 @@ Tessera.define("components/card", function (require, module, exports) {
     }, {});
   }
 
+  function pickSharedColors(colors = {}) {
+    return themeColorKeys.reduce((result, key) => {
+      if (colors[key] !== undefined) {
+        result[key] = colors[key];
+      }
+
+      return result;
+    }, {});
+  }
+
+  function resolveThemeColors(colors = {}) {
+    const sharedColors = pickSharedColors(colors);
+
+    return {
+      light: mergeStyles(defaultCardColors.light, sharedColors, colors.light),
+      dark: mergeStyles(defaultCardColors.dark, sharedColors, colors.dark),
+    };
+  }
+
   function card(options = {}) {
     ensureStyles();
     loadCardConfig();
@@ -99,7 +137,7 @@ Tessera.define("components/card", function (require, module, exports) {
 
     const flags = resolved.flags || {};
     const layout = resolved.layout || {};
-    const colors = resolved.colors || {};
+    const themeColors = resolveThemeColors(resolved.colors || {});
     const styles = resolved.styles || {};
 
     const headerChildren = [];
@@ -154,11 +192,16 @@ Tessera.define("components/card", function (require, module, exports) {
           "--ts-card-radius": layout.radius,
           "--ts-card-gap": layout.gap,
           "--ts-card-body-gap": layout.bodyGap,
-          "--ts-card-background": colors.background,
-          "--ts-card-border": colors.border,
-          "--ts-card-shadow": colors.shadow,
-          "--ts-card-hover-accent": colors.hoverAccent,
-          "--ts-card-value-color": colors.value,
+          "--ts-card-background-light": themeColors.light.background,
+          "--ts-card-background-dark": themeColors.dark.background,
+          "--ts-card-border-light": themeColors.light.border,
+          "--ts-card-border-dark": themeColors.dark.border,
+          "--ts-card-shadow-light": themeColors.light.shadow,
+          "--ts-card-shadow-dark": themeColors.dark.shadow,
+          "--ts-card-hover-accent-light": themeColors.light.hoverAccent,
+          "--ts-card-hover-accent-dark": themeColors.dark.hoverAccent,
+          "--ts-card-value-color-light": themeColors.light.value,
+          "--ts-card-value-color-dark": themeColors.dark.value,
         },
         styles.card
       ),

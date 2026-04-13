@@ -21,14 +21,20 @@
 
 /* ─── 容器 ────────────────────────────────────────────────── */
 .ts-card {
-  background: var(--ts-card-background, var(--ts-bg-card, var(--background-secondary)));
+  background: var(
+    --ts-card-background-current,
+    var(--ts-card-background-light, var(--ts-bg-card, var(--background-secondary)))
+  );
   border-radius: var(--ts-card-radius, 10px);
   padding: var(--ts-card-padding, 16px);
 
   /* 扁平风：默认保留边框和阴影变量入口，单卡可通过内联变量覆盖 */
-  box-shadow: var(--ts-card-shadow, none);
+  box-shadow: var(--ts-card-shadow-current, var(--ts-card-shadow-light, none));
   border: var(--ts-border-width, 1px) solid
-    var(--ts-card-border, var(--ts-border, var(--background-modifier-border)));
+    var(
+      --ts-card-border-current,
+      var(--ts-card-border-light, var(--ts-border, var(--background-modifier-border)))
+    );
 
   display: flex;
   flex-direction: column;
@@ -46,16 +52,65 @@
     transform var(--ts-transition, 0.2s ease);
 }
 
+body.theme-light .ts-card {
+  --ts-card-background-current: var(
+    --ts-card-background-light,
+    var(--ts-bg-card, var(--background-secondary))
+  );
+  --ts-card-border-current: var(
+    --ts-card-border-light,
+    var(--ts-border, var(--background-modifier-border))
+  );
+  --ts-card-shadow-current: var(--ts-card-shadow-light, none);
+  --ts-card-hover-accent-current: var(
+    --ts-card-hover-accent-light,
+    var(--ts-accent, var(--interactive-accent))
+  );
+  --ts-card-value-color-current: var(
+    --ts-card-value-color-light,
+    var(--ts-accent, var(--interactive-accent))
+  );
+}
+
+body.theme-dark .ts-card {
+  --ts-card-background-current: var(
+    --ts-card-background-dark,
+    var(--ts-bg-card, var(--background-secondary))
+  );
+  --ts-card-border-current: var(
+    --ts-card-border-dark,
+    var(--ts-border, var(--background-modifier-border))
+  );
+  --ts-card-shadow-current: var(--ts-card-shadow-dark, none);
+  --ts-card-hover-accent-current: var(
+    --ts-card-hover-accent-dark,
+    var(--ts-accent, var(--interactive-accent))
+  );
+  --ts-card-value-color-current: var(
+    --ts-card-value-color-dark,
+    var(--ts-accent, var(--interactive-accent))
+  );
+}
+
 /* ─── Hover：左侧内阴影变 accent 色 ───────────────────────── */
 .ts-card:hover {
   transform: translateY(-1px);
   border-color: var(
     --ts-card-hover-border,
-    var(--ts-card-border, var(--ts-border, var(--background-modifier-border)))
+    var(
+      --ts-card-border-current,
+      var(--ts-card-border-light, var(--ts-border, var(--background-modifier-border)))
+    )
   );
-  box-shadow: var(--ts-card-shadow, 0 12px 28px rgba(15, 23, 42, 0.08)),
+  box-shadow: var(
+      --ts-card-shadow-current,
+      var(--ts-card-shadow-light, 0 12px 28px rgba(15, 23, 42, 0.08))
+    ),
     inset var(--ts-hover-accent-width, 3px) 0 0
-      var(--ts-card-hover-accent, var(--ts-accent, var(--interactive-accent)));
+      var(
+        --ts-card-hover-accent-current,
+        var(--ts-card-hover-accent-light, var(--ts-accent, var(--interactive-accent)))
+      );
 }
 
 /* ─── 变体：无边框 ────────────────────────────────────────── */
@@ -128,7 +183,10 @@
   font-size: 28px;
   font-weight: 700;
   line-height: 1;
-  color: var(--ts-card-value-color, var(--ts-accent, var(--interactive-accent)));
+  color: var(
+    --ts-card-value-color-current,
+    var(--ts-card-value-color-light, var(--ts-accent, var(--interactive-accent)))
+  );
 }
 
 /* ─── 空状态 ────────────────────────────────────────────────── */
